@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="main.ui.MainController">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.MainController">
+   <children>
+      <TableView fx:id="tvListe" prefHeight="340.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="tcName" prefWidth="408.0" resizable="false" text="Name" />
+          <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="191.0" resizable="false" text="Status" />
+        </columns>
+      </TableView>
+      <TextField fx:id="tfHinzufügen" layoutX="50.0" layoutY="355.0" promptText="URL" />
+      <Button fx:id="btHinzufügen" layoutX="248.0" layoutY="355.0" mnemonicParsing="false" text="Hinzufügen" />
+   </children>
 </AnchorPane>
