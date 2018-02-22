@@ -4,16 +4,16 @@ public class User {
 
 	private String url;
 	private String name;
-	private boolean banStatus;
+	private String banStatus;
 
 	public User()
 	{
 		this.url = "";
 		this.name = "";
-		this.banStatus = false;
+		this.banStatus = "";
 	}
 
-	public User(String pURL, String pName, boolean pBanStatus) {
+	public User(String pURL, String pName, String pBanStatus) {
 		super();
 		url = pURL;
 		name = pName;
@@ -40,11 +40,11 @@ public class User {
 		this.name = name;
 	}
 
-	public boolean isBanStatus() {
+	public String getBanStatus() {
 		return banStatus;
 	}
 
-	public void setBanStatus(boolean banStatus) {
+	public void setBanStatus(String banStatus) {
 		this.banStatus = banStatus;
 	}
 

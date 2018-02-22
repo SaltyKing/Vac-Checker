@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import main.item.User;
 import variablen.Variablen;
 
 public class DateiManager {
@@ -164,10 +165,10 @@ public class DateiManager {
 		}
 	}
 
-	public ArrayList<String> lesenUrlDatei(String pDateiName, String pPfad) throws IOException
+	public ArrayList<User> lesenUrlDatei(String pDateiName, String pPfad) throws IOException
 	{
 		String lPfad = cVariablen.getcPfad() + pfadKorrektur(pPfad) + pDateiName;
-		ArrayList<String> lUserListe = new ArrayList<>();
+		ArrayList<User> lUserListe = new ArrayList<>();
 
 		BufferedReader lBr = new BufferedReader(new FileReader(new File(lPfad)));
 		String lZeile;
@@ -175,7 +176,7 @@ public class DateiManager {
 		while ((lZeile = lBr.readLine()) != null)
 		{
 			System.out.println(lZeile);
-			lUserListe.add(lZeile);
+			lUserListe.add(lUrlManager.getUserDaten(lZeile));
 		}
 
 		lBr.close();

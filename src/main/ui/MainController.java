@@ -1,6 +1,7 @@
 package main.ui;
 
 import main.DateiManager;
+import main.UrlManager;
 import main.item.User;
 import variablen.Variablen;
 
@@ -24,6 +25,7 @@ public class MainController implements Initializable{
 
 	private DateiManager lDateiManager = new DateiManager();
 	private Variablen cVariablen = new Variablen();
+	private UrlManager lUrlManager = new UrlManager();
 
 	@FXML
 	private TableView<User> tvListe;
@@ -32,7 +34,7 @@ public class MainController implements Initializable{
     private TableColumn<User, String> tcName;
 
     @FXML
-    private TableColumn<User, Boolean> tcStatus;
+    private TableColumn<User, String> tcStatus;
 
     @FXML
     private Button btHinzufügen;
@@ -47,17 +49,18 @@ public class MainController implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
     }
 
     private void hinzufügenTabelle() throws IOException
     {
-    	ArrayList<String> lListe = lDateiManager.lesenUrlDatei(cVariablen.getcUrlDateiName(), "");
+    	ArrayList<User> lListe = lDateiManager.lesenUrlDatei(cVariablen.getcUrlDateiName(), "");
 
-    	for (String lUser : lListe)
+    	for (User lUser : lListe)
     	{
     		User lNutzer = new User();
-    		lNutzer.setName(lUser);
-    		lNutzer.setBanStatus(false);
+    		lNutzer.setName(lUser.getName());
+    		lNutzer.setBanStatus(lUser.getBanStatus());
     		tvListe.getItems().add(lNutzer);
     	}
     }
