@@ -6,21 +6,21 @@ public class Variablen {
 	//				Dateinamen
 	//
 
-	private final String cUrlDatei = "url.txt";
+	private final String cUrlDateiName = "url.txt";
 
 	//
 	// 			Pfade
 	//
 
 	private final String cPfad = System.getenv("AppData") + "\\Vac-Checker";
-	private final String cUrl = cPfad + "\\" + cUrlDatei ;
+	private final String cUrl = cPfad + "\\" + cUrlDateiName ;
 
 	//
 	//				Getters und Setters für Dateinamen
 	//
 
-	public String getcUrlDatei() {
-		return cUrlDatei;
+	public String getcUrlDateiName() {
+		return cUrlDateiName;
 	}
 
 	//
