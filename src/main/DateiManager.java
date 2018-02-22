@@ -1,6 +1,8 @@
 package main;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import variablen.Variablen;
@@ -8,6 +10,7 @@ import variablen.Variablen;
 public class DateiManager {
 
 	private Variablen cVariablen = new Variablen();
+	private UrlManager lUrlManager = new UrlManager();
 
 	/**
 	 * 			Überprüft ob alle nötigen Dateien vorhanden sind
@@ -42,7 +45,7 @@ public class DateiManager {
 			{
 				System.out.println("[Debug] URL Datei wurde erstellt");
 				try {
-					erstellenDatei(cVariablen.getcUrlDatei(), "");
+					erstellenDatei(cVariablen.getcUrlDateiName(), "");
 				} catch (IOException e) {
 					System.err.println("[Debug] Es ist ein Fehler aufgetreten");
 				}
@@ -112,5 +115,45 @@ public class DateiManager {
 		return lPfad;
 	}
 
+	public void schreibenUrl(String pUrl) throws IOException
+	{
+		String lUrl = lUrlManager.korrigierenUrl(pUrl);
+
+		BufferedWriter lBw = new BufferedWriter(new FileWriter(new File(cVariablen.getcUrl()), true));
+
+		if (istDateiBeschrieben(cVariablen.getcUrl()))
+		{
+			lBw.write("\n" + lUrl);
+		}
+		else
+		{
+			lBw.write(lUrl);
+		}
+		lBw.close();
+	}
+
+	private boolean istDateiBeschrieben(String pUrl)
+	{
+		File lDatei = new File(pUrl);
+
+		if (lDatei.exists())
+		{
+			double size = lDatei.length();
+
+			if (size == 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			System.err.println("[Debug] Datei wurde nicht gefunden (istDateiBeschrieben)");
+			return false;
+		}
+	}
 
 }
