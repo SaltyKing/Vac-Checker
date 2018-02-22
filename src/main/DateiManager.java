@@ -1,9 +1,12 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import variablen.Variablen;
 
@@ -102,6 +105,11 @@ public class DateiManager {
 	{
 		String lPfad = pPfad;
 
+		if (pPfad.isEmpty())
+		{
+			return pPfad + "\\";
+		}
+
 		if (!pPfad.startsWith("\\"))
 		{
 			lPfad = "\\" + pPfad;
@@ -154,6 +162,25 @@ public class DateiManager {
 			System.err.println("[Debug] Datei wurde nicht gefunden (istDateiBeschrieben)");
 			return false;
 		}
+	}
+
+	public ArrayList<String> lesenUrlDatei(String pDateiName, String pPfad) throws IOException
+	{
+		String lPfad = cVariablen.getcPfad() + pfadKorrektur(pPfad) + pDateiName;
+		ArrayList<String> lUserListe = new ArrayList<>();
+
+		BufferedReader lBr = new BufferedReader(new FileReader(new File(lPfad)));
+		String lZeile;
+
+		while ((lZeile = lBr.readLine()) != null)
+		{
+			System.out.println(lZeile);
+			lUserListe.add(lZeile);
+		}
+
+		lBr.close();
+
+		return lUserListe;
 	}
 
 }
