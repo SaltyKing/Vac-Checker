@@ -2,12 +2,29 @@ package variablen;
 
 public class Variablen {
 
-	private final String cPfad = System.getenv("AppData") + "\\Vac-Checker";
+	//
+	//				Dateinamen
+	//
 
-	private final String cUrl = cPfad + "\\url.txt";
+	private final String cUrlDatei = "url.txt";
 
 	//
-	//				Getters und Setters
+	// 			Pfade
+	//
+
+	private final String cPfad = System.getenv("AppData") + "\\Vac-Checker";
+	private final String cUrl = cPfad + "\\" + cUrlDatei ;
+
+	//
+	//				Getters und Setters für Dateinamen
+	//
+
+	public String getcUrlDatei() {
+		return cUrlDatei;
+	}
+
+	//
+	//				Getters und Setters für Pfade
 	//
 
 	public String getcPfad() {
@@ -17,6 +34,5 @@ public class Variablen {
 	public String getcUrl() {
 		return cUrl;
 	}
-
 
 }
