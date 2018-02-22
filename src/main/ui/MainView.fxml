@@ -13,7 +13,7 @@
           <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="191.0" resizable="false" text="Status" />
         </columns>
       </TableView>
-      <TextField fx:id="tfHinzufügen" layoutX="50.0" layoutY="355.0" promptText="URL" />
-      <Button fx:id="btHinzufügen" layoutX="248.0" layoutY="355.0" mnemonicParsing="false" onAction="#btHinzufügenAction" text="Hinzufügen" />
+      <TextField fx:id="tfHinzufügen" layoutX="14.0" layoutY="355.0" onAction="#btHinzufügenAction" prefHeight="25.0" prefWidth="368.0" promptText="URL" />
+      <Button fx:id="btHinzufügen" layoutX="443.0" layoutY="355.0" mnemonicParsing="false" onAction="#btHinzufügenAction" text="Hinzufügen" />
    </children>
 </AnchorPane>
