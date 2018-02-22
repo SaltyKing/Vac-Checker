@@ -1,4 +1,4 @@
-package Variablen;
+package variablen;
 
 public class Variablen {
 
