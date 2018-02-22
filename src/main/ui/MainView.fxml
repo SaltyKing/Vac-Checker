@@ -10,7 +10,7 @@
       <TableView fx:id="tvListe" prefHeight="340.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="tcName" prefWidth="408.0" resizable="false" text="Name" />
-          <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="191.0" resizable="false" text="Status" />
+          <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="190.0" resizable="false" text="Status" />
         </columns>
       </TableView>
       <TextField fx:id="tfHinzufügen" layoutX="14.0" layoutY="355.0" onAction="#btHinzufügenAction" prefHeight="25.0" prefWidth="368.0" promptText="URL" />

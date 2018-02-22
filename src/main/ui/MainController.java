@@ -1,14 +1,17 @@
 package main.ui;
 
 import main.DateiManager;
-import main.UrlManager;
+//import main.UrlManager;
 import main.item.User;
 import variablen.Variablen;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javax.swing.Timer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +28,7 @@ public class MainController implements Initializable{
 
 	private DateiManager lDateiManager = new DateiManager();
 	private Variablen cVariablen = new Variablen();
-	private UrlManager lUrlManager = new UrlManager();
+//	private UrlManager lUrlManager = new UrlManager();
 
 	@FXML
 	private TableView<User> tvListe;
@@ -42,27 +45,49 @@ public class MainController implements Initializable{
     @FXML
     private TextField tfHinzufügen;
 
+	Timer timer = new Timer(300000, new ActionListener()
+	{
+		@Override
+		public void actionPerformed(java.awt.event.ActionEvent e) {
+			timer.stop();
+			System.out.println("[Debug] Nach 5 Minuten erneuert");
+			erneuernTabelle.start();
+			timer.start();
+		}
+	});
+
+	Timer erneuernTabelle = new Timer(1, new ActionListener()
+	{
+		@Override
+		public void actionPerformed(java.awt.event.ActionEvent e) {
+			erneuernTabelle.stop();
+			System.out.println("[Debug] Tabelle erneuern");
+			hinzufügenTabelle();
+			timer.stop();
+			timer.start();
+		}
+	});
+
     public void btHinzufügenAction(ActionEvent event)
     {
-    	try {
-			hinzufügenTabelle();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+    	erneuernTabelle.start();
     }
 
-    private void hinzufügenTabelle() throws IOException
+    private void hinzufügenTabelle()
     {
-    	ArrayList<User> lListe = lDateiManager.lesenUrlDatei(cVariablen.getcUrlDateiName(), "");
+    	tvListe.getItems().clear();
 
-    	for (User lUser : lListe)
-    	{
-    		User lNutzer = new User();
-    		lNutzer.setName(lUser.getName());
-    		lNutzer.setBanStatus(lUser.getBanStatus());
-    		tvListe.getItems().add(lNutzer);
-    	}
+    	ArrayList<User> lListe;
+		try {
+			lListe = lDateiManager.lesenUrlDatei(cVariablen.getcUrlDateiName(), "");
+			for (User lUser : lListe)
+			{
+				tvListe.getItems().add(lUser);
+			}
+		} catch (IOException e) {
+			System.err.println("[Debug] Es ist ein fehler aufgetreten (hinzufügenTabelle)");
+		}
+
     }
 
     public ObservableList<User> userListe()
@@ -85,6 +110,8 @@ public class MainController implements Initializable{
 	{
 		lDateiManager.überprüfenDateien();
 		erstellenTabelle();
-	}
+
+		erneuernTabelle.start();
+		}
 
 }
