@@ -165,9 +165,9 @@ public class DateiManager {
 		}
 	}
 
-	public ArrayList<User> lesenUrlDatei(String pDateiName, String pPfad) throws IOException
+	public ArrayList<User> lesenUrlDatei() throws IOException
 	{
-		String lPfad = cVariablen.getcPfad() + pfadKorrektur(pPfad) + pDateiName;
+		String lPfad = cVariablen.getcUrl();
 		ArrayList<User> lUserListe = new ArrayList<>();
 
 		BufferedReader lBr = new BufferedReader(new FileReader(new File(lPfad)));

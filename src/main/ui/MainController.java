@@ -79,7 +79,7 @@ public class MainController implements Initializable{
 
     	ArrayList<User> lListe;
 		try {
-			lListe = lDateiManager.lesenUrlDatei(cVariablen.getcUrlDateiName(), "");
+			lListe = lDateiManager.lesenUrlDatei();
 			for (User lUser : lListe)
 			{
 				tvListe.getItems().add(lUser);
