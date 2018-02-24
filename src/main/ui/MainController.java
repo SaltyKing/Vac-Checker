@@ -14,15 +14,21 @@ import java.util.ResourceBundle;
 
 import javax.swing.Timer;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MainController implements Initializable{
@@ -31,6 +37,9 @@ public class MainController implements Initializable{
 //	private Variablen cVariablen = new Variablen();
 	private UrlManager lUrlManager = new UrlManager();
 //	private UserManager lUserManager = new UserManager();
+
+	private double gebannt = 0.0;
+	private double nichtGebannt = 0.0;
 
 	@FXML
 	private TableView<User> tvListe;
@@ -46,6 +55,15 @@ public class MainController implements Initializable{
 
     @FXML
     private TextField tfHinzufügen;
+
+    @FXML
+    private Accordion acAccordion;
+
+    @FXML
+    private TitledPane tpStatistik;
+
+    @FXML
+    private PieChart pcChart;
 
 	Timer timer = new Timer(300000, new ActionListener()
 	{
@@ -105,11 +123,26 @@ public class MainController implements Initializable{
 			lListe = lDateiManager.lesenUrlDatei();
 			for (User lUser : lListe)
 			{
+
+				if (lUser.getBanStatus().matches("Nicht Gebannt"))
+				{
+					nichtGebannt++;
+					System.out.println(pieChartData().getValue().get(0).getPieValue());
+				}
+				else
+				{
+					gebannt++;
+					System.out.println(pieChartData().getValue().get(1).getPieValue());
+				}
+
 				tvListe.getItems().add(lUser);
 			}
 		} catch (IOException e) {
 			System.err.println("[Debug] Es ist ein fehler aufgetreten (hinzufügenTabelle)");
 		}
+
+		pcChart.getData().get(0).setPieValue(nichtGebannt);
+		pcChart.getData().get(1).setPieValue(gebannt);
     }
 
     public ObservableList<User> userListe()
@@ -127,13 +160,41 @@ public class MainController implements Initializable{
     	tvListe.setItems(userListe());
     }
 
+	public Property<ObservableList<PieChart.Data>> pieChartData()
+	{
+		Data nichtGebannt = new Data("nicht Gebannt", 0);
+	    nichtGebannt.setPieValue(0);
+	    nichtGebannt.setName("nicht Gebannt");
+	    Data gebannet = new Data("Gebannt", 0);
+	    gebannet.setPieValue(0);
+	    gebannet.setName("Gebannt");
+
+		Property<ObservableList<PieChart.Data>> pieChartData = new SimpleListProperty<Data>(FXCollections.observableList(new ArrayList<Data>()));
+		pieChartData.getValue().add(nichtGebannt);
+		pieChartData.getValue().add(gebannet);
+
+		return pieChartData;
+	}
+
+	private void erstellenStatistik()
+	{
+		pcChart.dataProperty().bind(pieChartData());
+
+		pcChart.setPrefSize(450.0, 450.0);
+		pcChart.getData().get(0).getNode().setStyle("-fx-pie-color: #778899");//Lightslategrey
+		pcChart.getData().get(1).getNode().setStyle("-fx-pie-color: #ff4f4f");// Good-Red
+		pcChart.setLegendVisible(false);
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
 		lDateiManager.überprüfenDateien();
 		erstellenTabelle();
+		erstellenStatistik();
 
 		erneuernTabelle.start();
-		}
+
+	}
 
 }
