@@ -1,9 +1,10 @@
 package main.ui;
 
 import main.DateiManager;
+import main.UrlManager;
 //import main.UrlManager;
 import main.item.User;
-import variablen.Variablen;
+//import variablen.Variablen;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -27,8 +28,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class MainController implements Initializable{
 
 	private DateiManager lDateiManager = new DateiManager();
-	private Variablen cVariablen = new Variablen();
-//	private UrlManager lUrlManager = new UrlManager();
+//	private Variablen cVariablen = new Variablen();
+	private UrlManager lUrlManager = new UrlManager();
 
 	@FXML
 	private TableView<User> tvListe;
@@ -70,7 +71,28 @@ public class MainController implements Initializable{
 
     public void btHinzufügenAction(ActionEvent event)
     {
-    	erneuernTabelle.start();
+    	String lUrl = tfHinzufügen.getText().toString().trim();
+
+    	if (!lUrl.isEmpty())
+    	{
+    		tfHinzufügen.setStyle("-fx-border-color: null");
+
+    		if (lUrlManager.überprüfenUrl(lUrl))
+    		{
+    			try {
+					lDateiManager.schreibenUrl(lUrl);
+				} catch (IOException e) {
+					System.err.println("[Debug] Die URL Datei konnte nich beschrieben werden");
+				}
+    		}
+    		
+    		tfHinzufügen.clear();
+    		erneuernTabelle.start();
+    	}
+    	else
+    	{
+    		tfHinzufügen.setStyle("-fx-border-color: red");
+    	}
     }
 
     private void hinzufügenTabelle()
@@ -87,7 +109,6 @@ public class MainController implements Initializable{
 		} catch (IOException e) {
 			System.err.println("[Debug] Es ist ein fehler aufgetreten (hinzufügenTabelle)");
 		}
-
     }
 
     public ObservableList<User> userListe()
