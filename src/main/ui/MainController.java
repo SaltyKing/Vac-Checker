@@ -127,12 +127,10 @@ public class MainController implements Initializable{
 				if (lUser.getBanStatus().matches("Nicht Gebannt"))
 				{
 					nichtGebannt++;
-					System.out.println(pieChartData().getValue().get(0).getPieValue());
 				}
 				else
 				{
 					gebannt++;
-					System.out.println(pieChartData().getValue().get(1).getPieValue());
 				}
 
 				tvListe.getItems().add(lUser);
