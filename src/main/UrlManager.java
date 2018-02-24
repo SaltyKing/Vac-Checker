@@ -50,18 +50,19 @@ public class UrlManager {
 	{
 		Document lDoc = Jsoup.connect(pUrl).userAgent("Mozilla/17.0").get();
 
-		User lUser = new User(pUrl, getNamen(lDoc), getBanDaten(lDoc));
+		User lUser = new User(pUrl, getNamen(lDoc, pUrl), getBanDaten(lDoc), kürzenUrl(pUrl));
 
 		return lUser;
 	}
 
-	private String getNamen(Document pURL)
+	private String getNamen(Document pURL, String pUrlString)
 	{
 		Elements lElement = pURL.select("div.persona_name");
 
 		for (Element name : lElement)
 		{
-			String lName = name.getElementsByTag("span").first().text();
+			String lNameTemp = name.getElementsByTag("span").first().text();
+			String lName = UserManager.vergleichenNamen(lNameTemp, pUrlString);
 			return lName;
 		}
 		return "Error (getNameData)";
