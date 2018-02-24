@@ -11,6 +11,11 @@ public class UserManager {
 		String lKurzUrl = lUrlManager.kürzenUrl(pUrl);
 		String lNameGelesen = lDateiManager.lesenName(lKurzUrl);
 
+		if (lNameGelesen.matches("Datei Fehler"))
+		{
+			return lName;
+		}
+
 		if (lName.matches(lNameGelesen))
 		{
 			return lName;

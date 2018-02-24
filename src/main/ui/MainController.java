@@ -2,11 +2,9 @@ package main.ui;
 
 import main.DateiManager;
 import main.UrlManager;
-import main.UserManager;
-//import main.UrlManager;
 import main.item.User;
+//import main.UrlManager;
 //import variablen.Variablen;
-import variablen.Variablen;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -30,9 +28,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class MainController implements Initializable{
 
 	private DateiManager lDateiManager = new DateiManager();
-	private Variablen cVariablen = new Variablen();
+//	private Variablen cVariablen = new Variablen();
 	private UrlManager lUrlManager = new UrlManager();
-	private UserManager lUserManager = new UserManager();
+//	private UserManager lUserManager = new UserManager();
 
 	@FXML
 	private TableView<User> tvListe;
