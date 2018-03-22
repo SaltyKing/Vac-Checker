@@ -1,5 +1,6 @@
 package main.ui;
 
+import main.DBManager;
 import main.DateiManager;
 import main.UrlManager;
 import main.item.User;
@@ -123,6 +124,13 @@ public class MainController implements Initializable{
 			lListe = lDateiManager.lesenUrlDatei();
 			for (User lUser : lListe)
 			{
+				
+				if (lUser.getFirstName() != "")
+				{
+					lUser.setName(lUser.getName() + " [" + lUser.getFirstName() + "]");
+				}
+				
+//				DBManager.hinzufügenBenutzer(lUser.getName(), lUser.getUrl(), lUser.getKurzUrl());
 
 				if (lUser.getBanStatus().matches("Nicht Gebannt"))
 				{
@@ -192,7 +200,6 @@ public class MainController implements Initializable{
 		erstellenStatistik();
 
 		erneuernTabelle.start();
-
 	}
 
 }

@@ -4,6 +4,7 @@ public class User {
 
 	private String url;
 	private String name;
+	private String firstName;
 	private String banStatus;
 	private String kurzUrl;
 
@@ -11,13 +12,15 @@ public class User {
 	{
 		this.url = "";
 		this.name = "";
+		this.firstName = "";
 		this.banStatus = "";
 		this.kurzUrl = "";
 	}
 
-	public User(String pURL, String pName, String pBanStatus, String pKurzUrl) {
+	public User(String pURL, String pName, String pFirstName, String pBanStatus, String pKurzUrl) {
 		this.url = pURL;
 		this.name = pName;
+		this.firstName = pFirstName;
 		this.banStatus = pBanStatus;
 		this.kurzUrl = pKurzUrl;
 
@@ -41,6 +44,14 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getBanStatus() {

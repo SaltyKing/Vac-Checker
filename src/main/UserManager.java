@@ -13,16 +13,16 @@ public class UserManager {
 
 		if (lNameGelesen.matches("Datei Fehler"))
 		{
-			return lName;
+			return "";
 		}
 
 		if (lName.matches(lNameGelesen))
 		{
-			return lName;
+			return "";
 		}
 		else
 		{
-			return lName +  " [" + lNameGelesen + "]";
+			return lNameGelesen;
 		}
 
 	}
