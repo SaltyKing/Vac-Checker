@@ -9,6 +9,7 @@ public class Variablen {
 	private final String cUrlDateiName = "url.txt";
 	private final String cHinzugefügterNameDatei = "name.txt";
 	private final String cUserVerzeichnis = "User";
+	private final String cKommentarDateiName = "Kommentar.txt";
 
 	//
 	//				Pfade
@@ -18,7 +19,8 @@ public class Variablen {
 	private final String cUrl = cPfad + "\\" + cUrlDateiName ;
 	private final String cUser = cPfad + "\\" + cUserVerzeichnis;
 	private final String cHinzugefügterName = cUser + "\\KURZURL\\" + cHinzugefügterNameDatei;
-
+	private final String cKommentar = cPfad + "\\" + cKommentarDateiName;
+	
 	//
 	//				DB
 	//
@@ -41,6 +43,10 @@ public class Variablen {
 	public String getcUserVerzeichnis(){
 		return cUserVerzeichnis;
 	}
+	
+	public String getcKommentarDateiName() {
+		return cKommentarDateiName;
+	}
 
 	//
 	//				Getters für Pfade
@@ -58,6 +64,10 @@ public class Variablen {
 		return cUser;
 	}
 
+	public String getcKommentar() {
+		return cKommentar;
+	}
+	
 	public String getcHinzugefügterName(String pKurzUrl) {
 		return cHinzugefügterName.replace("KURZURL", pKurzUrl);
 	}
