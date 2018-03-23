@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 
 public class Start extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -18,12 +19,16 @@ public class Start extends Application {
 			primaryStage.show();
 
 			primaryStage.setResizable(false);
+			primaryStage.setOnCloseRequest(e -> DBManager.beendenTabelle());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) {
+		DBManager.setProperty();
+		DBManager.connect();
+		DBManager.ausgebenTabelle();
 		launch(args);
 	}
 }

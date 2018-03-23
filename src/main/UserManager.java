@@ -2,27 +2,21 @@ package main;
 
 public class UserManager {
 
-	private static DateiManager lDateiManager = new DateiManager();
-	private static UrlManager lUrlManager = new UrlManager();
+//	private static DateiManager lDateiManager = new DateiManager();
+//	private static UrlManager lUrlManager = new UrlManager();
 
-	public static String vergleichenNamen(String pName, String pUrl)
+	public static boolean vergleichenNamen(String pName, String pKurzUrl)
 	{
 		String lName = pName;
-		String lKurzUrl = lUrlManager.kürzenUrl(pUrl);
-		String lNameGelesen = lDateiManager.lesenName(lKurzUrl);
-
-		if (lNameGelesen.matches("Datei Fehler"))
-		{
-			return lName;
-		}
+		String lNameGelesen = DBManager.lesenName(pKurzUrl);
 
 		if (lName.matches(lNameGelesen))
 		{
-			return lName;
+			return false;
 		}
 		else
 		{
-			return lName +  " [" + lNameGelesen + "]";
+			return true;
 		}
 
 	}

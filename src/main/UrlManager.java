@@ -50,25 +50,35 @@ public class UrlManager {
 	{
 		Document lDoc = Jsoup.connect(pUrl).userAgent("Mozilla/17.0").get();
 
-		User lUser = new User(pUrl, getNamen(lDoc, pUrl), getBanDaten(lDoc), kürzenUrl(pUrl));
-
+		User lUser = new User();
+		
+		lUser.setUrl(pUrl);
+		lUser.setName(getNamen(lDoc));
+		lUser.setFirstName(lUser.getName());
+		lUser.setBanStatus(getBanDaten(lDoc));
+		lUser.setKurzUrl(kürzenUrl(pUrl));
+		
 		return lUser;
 	}
 
-	private String getNamen(Document pURL, String pUrlString)
+	public String getNamen(Document pURL)
 	{
 		Elements lElement = pURL.select("div.persona_name");
 
 		for (Element name : lElement)
 		{
-			String lNameTemp = name.getElementsByTag("span").first().text();
-			String lName = UserManager.vergleichenNamen(lNameTemp, pUrlString);
+			String lName = name.getElementsByTag("span").first().text();
+			
+			// Daten Hinzufügen zur SQL Tabelle (muss hier sein, damit der erste Name vorhanden ist) !! TEMPORÄR !!
+			
+//			DBManager.hinzufügenBenutzer(lNameTemp, pUrlString, kürzenUrl(pUrlString));
+			
 			return lName;
 		}
 		return "Error (getNameData)";
 	}
 
-	private String getBanDaten(Document pURL)
+	public String getBanDaten(Document pURL)
 	{
 		Elements lElement = pURL.select("div.profile_ban_status");
 
