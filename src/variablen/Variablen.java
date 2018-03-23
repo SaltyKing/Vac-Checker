@@ -11,7 +11,7 @@ public class Variablen {
 	private final String cUserVerzeichnis = "User";
 
 	//
-	//				Pfade
+	// 			Pfade
 	//
 
 	private final String cPfad = System.getenv("AppData") + "\\Vac-Checker";
@@ -20,14 +20,7 @@ public class Variablen {
 	private final String cHinzugefügterName = cUser + "\\KURZURL\\" + cHinzugefügterNameDatei;
 
 	//
-	//				DB
-	//
-	
-	private final String cDBName = "benutzer";
-	private final String cTabelle = "benutzer";
-	
-	//
-	//				Getters für Dateinamen
+	//				Getters und Setters für Dateinamen
 	//
 
 	public String getcUrlDateiName() {
@@ -43,7 +36,7 @@ public class Variablen {
 	}
 
 	//
-	//				Getters für Pfade
+	//				Getters und Setters für Pfade
 	//
 
 	public String getcPfad() {
@@ -62,18 +55,5 @@ public class Variablen {
 		return cHinzugefügterName.replace("KURZURL", pKurzUrl);
 	}
 
-
-	//
-	//				Getters für DB
-	//
-	
-	public String getcDBName() {
-		return cDBName;
-	}
-	
-	public String getcTabelle() {
-		return cTabelle;
-	}
-	
 }
 
