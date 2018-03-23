@@ -1,17 +1,23 @@
 package main;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import org.jsoup.Jsoup;
+
+import main.item.User;
 import variablen.Variablen;
 
 public class DBManager {
 
 	private static Variablen lVariablen = new Variablen();
+	private static UrlManager lUrlManager = new UrlManager();
 	
 	private static final String lDBName = lVariablen.getcDBName();
 	private static final String lTabelle = lVariablen.getcTabelle();
@@ -24,12 +30,13 @@ public class DBManager {
 	private static ResultSet lErgebnis;
 	
 	private static String erstellenTabelle = "CREATE TABLE " + lTabelle + "(" + 
-											 "UserID int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," + 
-											 "Name varchar(50) NOT NULL," + 
-											 "firstName varchar(50) NOT NULL," +
-											 "URL varchar(75) NOT NULL," + 
-											 "shortURL varchar(20) NOT NULL," + 
-											 "description varchar(255)" + 
+							/* 1 */			 "UserID int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," + 
+							/* 2 */			 "Name varchar(50) NOT NULL," + 
+							/* 3 */			 "firstName varchar(50) NOT NULL," +
+							/* 4 */			 "URL varchar(75) NOT NULL," + 
+							/* 5 */			 "shortURL varchar(20) NOT NULL," + 
+							/* 6 */			 "description varchar(255)" + 
+							/* 7 */			 "hinzugefuegt Date" +
 											 ")";
 	
 
@@ -45,25 +52,81 @@ public class DBManager {
 		}
 	}
 	
-	public static void hinzufügenBenutzer(String pName, String pUrl, String pShortUrl)
+	public static void hinzufügenBenutzer(String pUrl)
 	{
+		UrlManager lUrlManager = new UrlManager();
+		
 		try {
+			User lUser = lUrlManager.getUserDaten(pUrl);
+			
+			String lName = lUser.getName();
+			String lUrl = lUser.getUrl();
+			String lKurzUrl = lUser.getKurzUrl();
+			
 			lVorbereitetStatement = getlVerbindung().prepareStatement("INSERT INTO " + lTabelle + " "
 					+ "(Name, firstName, URL, shortUrl) "
 					+ "VALUES (?, ?, ?, ?)");
 			
-			lVorbereitetStatement.setString(1, pName);
-			lVorbereitetStatement.setString(2, pName);
-			lVorbereitetStatement.setString(3, pUrl);
-			lVorbereitetStatement.setString(4, pShortUrl);
+			lVorbereitetStatement.setString(1, lName);
+			lVorbereitetStatement.setString(2, lName);
+			lVorbereitetStatement.setString(3, lUrl);
+			lVorbereitetStatement.setString(4, lKurzUrl);
 			
 			lVorbereitetStatement.executeUpdate();
-		} catch (SQLException e) {
+		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void lesenTabelle()
+	public static ArrayList<User> lesenTabelle()
+	{
+
+		ArrayList<User> lUserListe = new ArrayList<>();
+		
+		try {
+			lErgebnis = lStatement.executeQuery("SELECT * FROM benutzer");
+			
+			while (lErgebnis.next())
+			{
+				User lUser = new User();
+				
+				lUser.setId(lErgebnis.getInt(1));
+				lUser.setName(lErgebnis.getString(2));
+				lUser.setFirstName(lErgebnis.getString(3));
+				lUser.setUrl(lErgebnis.getString(4));
+				lUser.setKurzUrl(lErgebnis.getString(5));
+				lUser.setBanStatus(lUrlManager.getBanDaten(Jsoup.connect(lErgebnis.getString(4)).userAgent("Mozilla/17.0").get()));
+				lUser.setHinzugefuegt(lErgebnis.getDate(7));
+				
+				lUserListe.add(lUser);
+			}
+			
+			return lUserListe;
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String lesenName(String pKurzUrl)
+	{
+		try {
+			lVorbereitetStatement = getlVerbindung().prepareStatement("SELECT * FROM benutzer WHERE shortUrl = ?");
+			
+			lVorbereitetStatement.setString(1, pKurzUrl);
+			
+			lErgebnis = lVorbereitetStatement.executeQuery();
+			
+			lErgebnis.next();
+			
+			return lErgebnis.getString(3);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Fehler";
+		}
+	}
+	
+	public static void ausgebenTabelle()
 	{
 		try {
 			lErgebnis = getlStatement().executeQuery("SELECT * FROM benutzer");

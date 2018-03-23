@@ -1,14 +1,13 @@
 package main.ui;
 
 import main.DBManager;
-import main.DateiManager;
 import main.UrlManager;
+import main.UserManager;
 import main.item.User;
 //import main.UrlManager;
 //import variablen.Variablen;
 
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -34,7 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MainController implements Initializable{
 
-	private DateiManager lDateiManager = new DateiManager();
+//	private DateiManager lDateiManager = new DateiManager();
 //	private Variablen cVariablen = new Variablen();
 	private UrlManager lUrlManager = new UrlManager();
 //	private UserManager lUserManager = new UserManager();
@@ -99,11 +98,8 @@ public class MainController implements Initializable{
 
     		if (lUrlManager.überprüfenUrl(lUrl))
     		{
-    			try {
-					lDateiManager.schreibenUrl(lUrl);
-				} catch (IOException e) {
-					System.err.println("[Debug] Die URL Datei konnte nicht beschrieben werden");
-				}
+//				lDateiManager.schreibenUrl(lUrl);
+				DBManager.hinzufügenBenutzer(lUrl);
     		}
 
     		tfHinzufügen.clear();
@@ -120,31 +116,29 @@ public class MainController implements Initializable{
     	tvListe.getItems().clear();
 
     	ArrayList<User> lListe;
-		try {
-			lListe = lDateiManager.lesenUrlDatei();
-			for (User lUser : lListe)
+//		lListe = lDateiManager.lesenUrlDatei();
+		lListe = DBManager.lesenTabelle();
+		for (User lUser : lListe)
+		{
+			
+			if (UserManager.vergleichenNamen(lUser.getName(), lUser.getKurzUrl()))
 			{
+				lUser.setName(lUser.getName() + " [" + lUser.getFirstName() + "]");
 				
-				if (lUser.getFirstName() != "")
-				{
-					lUser.setName(lUser.getName() + " [" + lUser.getFirstName() + "]");
-				}
-				
-//				DBManager.hinzufügenBenutzer(lUser.getName(), lUser.getUrl(), lUser.getKurzUrl());
-
-				if (lUser.getBanStatus().matches("Nicht Gebannt"))
-				{
-					nichtGebannt++;
-				}
-				else
-				{
-					gebannt++;
-				}
-
-				tvListe.getItems().add(lUser);
 			}
-		} catch (IOException e) {
-			System.err.println("[Debug] Es ist ein fehler aufgetreten (hinzufügenTabelle)");
+			
+//			DBManager.hinzufügenBenutzer(lUser.getName(), lUser.getUrl(), lUser.getKurzUrl());
+		
+			if (lUser.getBanStatus().matches("Nicht Gebannt"))
+			{
+				nichtGebannt++;
+			}
+			else
+			{
+				gebannt++;
+			}
+			
+			tvListe.getItems().add(lUser);
 		}
 
 		pcChart.getData().get(0).setPieValue(nichtGebannt);
@@ -195,11 +189,12 @@ public class MainController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
-		lDateiManager.überprüfenDateien();
+//		lDateiManager.überprüfenDateien();
 		erstellenTabelle();
 		erstellenStatistik();
 
 		erneuernTabelle.start();
+//		hinzufügenTabelle();
 	}
 
 }

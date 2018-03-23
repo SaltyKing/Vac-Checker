@@ -12,8 +12,6 @@ import main.item.User;
 
 public class UrlManager {
 
-	private DBManager lDBManager = new DBManager();
-	
 	/**
 	 * 			Überprüft ob die URL mit den Steamcommunity links Startet
 	 *
@@ -52,12 +50,18 @@ public class UrlManager {
 	{
 		Document lDoc = Jsoup.connect(pUrl).userAgent("Mozilla/17.0").get();
 
-		User lUser = new User(pUrl, getNamen(lDoc), UserManager.vergleichenNamen(getNamen(lDoc), pUrl), getBanDaten(lDoc), kürzenUrl(pUrl));
+		User lUser = new User();
+		
+		lUser.setUrl(pUrl);
+		lUser.setName(getNamen(lDoc));
+		lUser.setFirstName(lUser.getName());
+		lUser.setBanStatus(getBanDaten(lDoc));
+		lUser.setKurzUrl(kürzenUrl(pUrl));
 		
 		return lUser;
 	}
 
-	private String getNamen(Document pURL)
+	public String getNamen(Document pURL)
 	{
 		Elements lElement = pURL.select("div.persona_name");
 
@@ -74,7 +78,7 @@ public class UrlManager {
 		return "Error (getNameData)";
 	}
 
-	private String getBanDaten(Document pURL)
+	public String getBanDaten(Document pURL)
 	{
 		Elements lElement = pURL.select("div.profile_ban_status");
 

@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 
 public class Start extends Application {
 	
-	private static DBManager lDBManager = new DBManager();
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -29,8 +27,8 @@ public class Start extends Application {
 
 	public static void main(String[] args) {
 		DBManager.setProperty();
-		lDBManager.connect();
-		lDBManager.lesenTabelle();
+		DBManager.connect();
+		DBManager.ausgebenTabelle();
 		launch(args);
 	}
 }
