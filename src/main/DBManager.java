@@ -166,6 +166,7 @@ public class DBManager {
 		Variablen lVariablen = new Variablen();
 		String lBeenden = "jdbc:derby:" + lVariablen.getcDBName() + ";shutdown=true";
 		try {
+			System.out.println("[Debug] Verbindung geschlossen");
 			DriverManager.getConnection(lBeenden);
 		} catch (SQLException e) {
 			// Ignoriert, dass die Datenbank am Ende des Programms heruntergefahren wird

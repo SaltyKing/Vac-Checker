@@ -5,16 +5,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="338.0" prefWidth="517.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="detail.ErweitertController">
+<AnchorPane prefHeight="338.0" prefWidth="517.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="erweitert.ErweitertController">
    <children>
       <Label layoutX="15.0" layoutY="15.0" text="Name:" />
       <Label layoutX="15.0" layoutY="45.0" text="Ban Status:" />
       <Label layoutX="15.0" layoutY="75.0" text="Link:" />
       <Label layoutX="15.0" layoutY="105.0" text="Hinzugefügt am:" />
-      <Label fx:id="lbName" layoutX="71.0" layoutY="15.0" text="USER_NAME" />
-      <Label fx:id="lbStatus" layoutX="89.0" layoutY="45.0" text="USER_STATUS" />
-      <Label fx:id="lbLink" layoutX="57.0" layoutY="75.0" text="USER_LINK" />
-      <Label fx:id="lbHinzugefügt" layoutX="124.0" layoutY="105.0" text="USER_HINZUGEFÜGT" />
+      <Label fx:id="lbName" layoutX="116.0" layoutY="15.0" text="USER_NAME" />
+      <Label fx:id="lbStatus" layoutX="116.0" layoutY="45.0" text="USER_STATUS" />
+      <Label fx:id="lbLink" layoutX="116.0" layoutY="75.0" text="USER_LINK" />
+      <Label fx:id="lbHinzugefügt" layoutX="116.0" layoutY="105.0" text="USER_HINZUGEFÜGT" />
    </children>
 </AnchorPane>

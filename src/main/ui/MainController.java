@@ -4,32 +4,30 @@ import main.DBManager;
 import main.UrlManager;
 import main.UserManager;
 import main.item.User;
-//import main.UrlManager;
-//import variablen.Variablen;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.Timer;
 
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.PieChart.Data;
-import javafx.scene.control.Accordion;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable{
 
@@ -37,33 +35,20 @@ public class MainController implements Initializable{
 //	private Variablen cVariablen = new Variablen();
 	private UrlManager lUrlManager = new UrlManager();
 //	private UserManager lUserManager = new UserManager();
-
-	private double gebannt = 0.0;
-	private double nichtGebannt = 0.0;
+	
+	public static User ausgewählterBenutzer = null;
 
 	@FXML
 	private TableView<User> tvListe;
 
     @FXML
-    private TableColumn<User, String> tcName;
+    private TableColumn<User, String> tcName, tcStatus;
 
     @FXML
-    private TableColumn<User, String> tcStatus;
-
-    @FXML
-    private Button btHinzufügen;
+    private Button btHinzufügen, btTest;
 
     @FXML
     private TextField tfHinzufügen;
-
-    @FXML
-    private Accordion acAccordion;
-
-    @FXML
-    private TitledPane tpStatistik;
-
-    @FXML
-    private PieChart pcChart;
 
 	Timer timer = new Timer(300000, new ActionListener()
 	{
@@ -128,21 +113,12 @@ public class MainController implements Initializable{
 			}
 			
 //			DBManager.hinzufügenBenutzer(lUser.getName(), lUser.getUrl(), lUser.getKurzUrl());
-		
-			if (lUser.getBanStatus().matches("Nicht Gebannt"))
-			{
-				nichtGebannt++;
-			}
-			else
-			{
-				gebannt++;
-			}
 			
 			tvListe.getItems().add(lUser);
 		}
 
-		pcChart.getData().get(0).setPieValue(nichtGebannt);
-		pcChart.getData().get(1).setPieValue(gebannt);
+//		pcChart.getData().get(0).setPieValue(nichtGebannt);
+//		pcChart.getData().get(1).setPieValue(gebannt);
     }
 
     public ObservableList<User> userListe()
@@ -160,41 +136,72 @@ public class MainController implements Initializable{
     	tvListe.setItems(userListe());
     }
 
-	public Property<ObservableList<PieChart.Data>> pieChartData()
+//	public Property<ObservableList<PieChart.Data>> pieChartData()
+//	{
+//		Data nichtGebannt = new Data("nicht Gebannt", 0);
+//	    nichtGebannt.setPieValue(0);
+//	    nichtGebannt.setName("nicht Gebannt");
+//	    Data gebannet = new Data("Gebannt", 0);
+//	    gebannet.setPieValue(0);
+//	    gebannet.setName("Gebannt");
+//
+//		Property<ObservableList<PieChart.Data>> pieChartData = new SimpleListProperty<Data>(FXCollections.observableList(new ArrayList<Data>()));
+//		pieChartData.getValue().add(nichtGebannt);
+//		pieChartData.getValue().add(gebannet);
+//
+//		return pieChartData;
+//	}
+
+//	private void erstellenStatistik()
+//	{
+//		pcChart.dataProperty().bind(pieChartData());
+//
+//		pcChart.setPrefSize(450.0, 450.0);
+//		pcChart.getData().get(0).getNode().setStyle("-fx-pie-color: #778899");//Lightslategrey
+//		pcChart.getData().get(1).getNode().setStyle("-fx-pie-color: #ff4f4f");// Good-Red
+//		pcChart.setLegendVisible(false);
+//	}
+
+	public void test(ActionEvent event)
 	{
-		Data nichtGebannt = new Data("nicht Gebannt", 0);
-	    nichtGebannt.setPieValue(0);
-	    nichtGebannt.setName("nicht Gebannt");
-	    Data gebannet = new Data("Gebannt", 0);
-	    gebannet.setPieValue(0);
-	    gebannet.setName("Gebannt");
-
-		Property<ObservableList<PieChart.Data>> pieChartData = new SimpleListProperty<Data>(FXCollections.observableList(new ArrayList<Data>()));
-		pieChartData.getValue().add(nichtGebannt);
-		pieChartData.getValue().add(gebannet);
-
-		return pieChartData;
+		User lUser = tvListe.getSelectionModel().getSelectedItem();
+		
+		try {
+			
+			if (lUser != null)
+			{
+				setAusgewählterBenutzer(lUser);
+				
+				Parent root = FXMLLoader.load(erweitert.ErweitertController.class.getResource("ErweitertView.fxml"));
+				
+				Stage stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.setTitle("Erweiterte Ansicht");
+				stage.setScene(new Scene(root, 590, 390));
+				stage.show();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
-	private void erstellenStatistik()
-	{
-		pcChart.dataProperty().bind(pieChartData());
-
-		pcChart.setPrefSize(450.0, 450.0);
-		pcChart.getData().get(0).getNode().setStyle("-fx-pie-color: #778899");//Lightslategrey
-		pcChart.getData().get(1).getNode().setStyle("-fx-pie-color: #ff4f4f");// Good-Red
-		pcChart.setLegendVisible(false);
-	}
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
+		
 //		lDateiManager.überprüfenDateien();
 		erstellenTabelle();
-		erstellenStatistik();
 
 		erneuernTabelle.start();
 //		hinzufügenTabelle();
+	}
+
+	public static User getAusgewählterBenutzer() {
+		return ausgewählterBenutzer;
+	}
+
+	public static void setAusgewählterBenutzer(User ausgewählterBenutzer) {
+		MainController.ausgewählterBenutzer = ausgewählterBenutzer;
 	}
 
 }
