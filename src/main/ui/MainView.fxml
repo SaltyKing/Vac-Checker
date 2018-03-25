@@ -16,6 +16,6 @@
         </columns>
       </TableView>
       <TextField fx:id="tfHinzufügen" layoutX="14.0" layoutY="361.0" onAction="#btHinzufügenAction" prefHeight="25.0" prefWidth="368.0" promptText="URL" />
-      <Button fx:id="btTest" layoutX="515.0" layoutY="361.0" mnemonicParsing="false" onAction="#test" text="TEST" />
+      <Button fx:id="btTest" layoutX="480.0" layoutY="361.0" mnemonicParsing="false" onAction="#öffnenErweitert" text="Erweiterte Ansicht" />
    </children>
 </AnchorPane>

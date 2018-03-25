@@ -163,7 +163,7 @@ public class MainController implements Initializable{
 //		pcChart.setLegendVisible(false);
 //	}
 
-	public void test(ActionEvent event)
+	public void öffnenErweitert(ActionEvent event)
 	{
 		User lUser = tvListe.getSelectionModel().getSelectedItem();
 		
