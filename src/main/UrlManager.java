@@ -99,7 +99,22 @@ public class UrlManager {
 
 		return "Nicht Gebannt";
 	}
+	
+	public String getAvatarData(Document pURL)
+	{
+		Elements img = pURL.getElementsByTag("img");
 
+		for (Element el : img)
+		{
+			String src = el.absUrl("src");
+			if (src.contains("full"))
+			{
+				return src;
+			}
+		}
+		return "";
+	}
+	
 	public String kürzenUrl(String pURL)
 	{
 		String kurzeURL;

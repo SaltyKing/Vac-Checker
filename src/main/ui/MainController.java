@@ -84,7 +84,7 @@ public class MainController implements Initializable{
     		if (lUrlManager.überprüfenUrl(lUrl))
     		{
 //				lDateiManager.schreibenUrl(lUrl);
-				DBManager.hinzufügenBenutzer(lUrl);
+				DBManager.hinzufügenBenutzer(lUrlManager.korrigierenUrl(lUrl));
     		}
 
     		tfHinzufügen.clear();
@@ -111,6 +111,7 @@ public class MainController implements Initializable{
 				lUser.setName(lUser.getName() + " [" + lUser.getFirstName() + "]");
 				
 			}
+			
 			
 //			DBManager.hinzufügenBenutzer(lUser.getName(), lUser.getUrl(), lUser.getKurzUrl());
 			
@@ -183,6 +184,8 @@ public class MainController implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+//		DBManager.hinzufügenBild(lUser);
 	}
 	
 	@Override

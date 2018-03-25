@@ -8,29 +8,26 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import main.DBManager;
 import main.item.User;
 import main.ui.MainController;
 
 public class ErweitertController implements Initializable{
 
     @FXML
-    private Label lbName;
-
+    private Label lbName, lbLink, lbStatus, lbHinzugefügt;
+    
     @FXML
-    private Label lbLink;
-
-    @FXML
-    private Label lbStatus;
-
-    @FXML
-    private Label lbHinzugefügt;
+    private ImageView ivBild;
 
     private void erstellenOberfläche()
     {
     	User lUser = MainController.getAusgewählterBenutzer();
 		
 		lbName.setText(lUser.getName());
-		lbLink.setText(lUser.getUrl());
+		lbLink.setText(lUser.getKurzUrl());
 		lbStatus.setText(lUser.getBanStatus());
 		
 		DateTimeFormatter formatEingabe = DateTimeFormatter.ofPattern( "yyyy-MM-dd");
@@ -40,6 +37,10 @@ public class ErweitertController implements Initializable{
 		String neuesDatum = ld.format( formatAusgabe );
 		
 		lbHinzugefügt.setText(neuesDatum);
+		
+		Image a = DBManager.bekommenBild(lUser);
+		
+		ivBild.setImage(a);
     }
     
 	@Override
