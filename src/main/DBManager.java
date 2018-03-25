@@ -3,13 +3,9 @@ package main;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,7 +18,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import javafx.scene.image.Image;
 import main.item.User;
