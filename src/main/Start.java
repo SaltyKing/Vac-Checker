@@ -14,7 +14,7 @@ public class Start extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("ui/MainView.fxml"));
 			primaryStage.setTitle("Vac Checker");
-			Scene scene = new Scene(root, 590, 390);
+			Scene scene = new Scene(root, 600, 400);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 

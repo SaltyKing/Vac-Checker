@@ -178,7 +178,8 @@ public class MainController implements Initializable{
 				Stage stage = new Stage();
 				stage.initModality(Modality.APPLICATION_MODAL);
 				stage.setTitle("Erweiterte Ansicht");
-				stage.setScene(new Scene(root, 590, 390));
+				stage.setScene(new Scene(root, 600, 400));
+				stage.setResizable(false);
 				stage.show();
 			}
 		} catch (IOException e) {

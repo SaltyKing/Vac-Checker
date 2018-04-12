@@ -29,7 +29,7 @@ public class DBManager {
 	private static UrlManager lUrlManager = new UrlManager();
 	
 	private static final String lDBName = lVariablen.getcDBName();
-	private static final String lTabelle = lVariablen.getcTabelle();
+	private static final String lTabelle = "benutzer";
 	private static final String lDBVerbindung = "jdbc:derby:" + lDBName + ";create=true";
 	
 	private static Connection lVerbindung;
